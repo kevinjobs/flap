@@ -4,6 +4,7 @@ from flask import Flask
 from .extensions import db
 
 from .blueprints.auth import auth
+from .blueprints.api import api
 from config import config as configs
 
 
@@ -21,5 +22,6 @@ def create_app(conf='default'):
 
     # register blueprints
     app.register_blueprint(auth)
+    app.register_blueprint(api)
 
     return app
