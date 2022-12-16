@@ -10,6 +10,7 @@ class Permission:
 
 class Role(db.Model):
     __tablename__ = 'roles'
+    create_at = db.Column(db.BigInteger)
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     permissions = db.Column(db.Integer)
@@ -40,12 +41,14 @@ class Role(db.Model):
 
 class User(db.Model):
     __tablename__ = 'users'
+    create_at = db.Column(db.BigInteger)
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     email = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
     is_default = db.Column(db.Boolean, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    articles = db.relationship('Article', backref='author', lazy='dynamic')
 
     @property
     def password(self):
