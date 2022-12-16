@@ -1,9 +1,10 @@
 from app import db
+from app.utils import now_timestamp
 
 
 class Article(db.Model):
     __tablename__ = 'articles'
-    create_at = db.Column(db.BigInteger)
+    create_at = db.Column(db.BigInteger, default=now_timestamp())
     id = db.Column(db.Integer, primary_key=True)
     # the timestamp of an article modified
     modify_at = db.Column(db.BigInteger)

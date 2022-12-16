@@ -34,5 +34,5 @@ def add_new():
 
 @api.get('/users')
 def get_user_list():
-    user = User.query.all()
-    return resp(RespCode.OK, 'get user list success', user)
+    users = User.query.all()
+    return resp(RespCode.OK, 'get user list success', [u.to_dict() for u in users])

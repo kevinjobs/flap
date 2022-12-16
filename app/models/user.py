@@ -1,54 +1,26 @@
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import inspect
 
 from app.extensions import db
-
-
-class Permission:
-    GENERAL = 0x01
-    ADMINISTER = 0xff
-
-
-class Role(db.Model):
-    __tablename__ = 'roles'
-    create_at = db.Column(db.BigInteger)
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-    permissions = db.Column(db.Integer)
-    users = db.relationship('User', backref='role', lazy='dynamic')
-
-    @staticmethod
-    def insert_roles():
-        """
-        insert roles when the role model was created
-        :return: None
-        """
-        roles = {
-            'User': (Permission.GENERAL,),
-            'Administer': (Permission.ADMINISTER,)
-        }
-
-        # traverse the roles to insert everyone
-        for r in roles:
-            role = Role.query.filter_by(name=r).first()
-            if role is None:
-                role = Role(name=r)
-            role.permissions = roles[r][0]
-            db.session.add(role)
-
-    def __repr__(self):
-        return '<Role \'%s\'>' % self.name
+from app.utils import now_timestamp
 
 
 class User(db.Model):
     __tablename__ = 'users'
-    create_at = db.Column(db.BigInteger)
+    create_at = db.Column(db.BigInteger, default=now_timestamp())
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     email = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
     is_default = db.Column(db.Boolean, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    articles = db.relationship('Article', backref='author', lazy='dynamic')
+    articles = db.relationship('Article', backref='users', lazy='dynamic')
+
+    def to_dict(self):
+        data = {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
+        del data['password_hash']
+        del data['role_id']
+        return data
 
     @property
     def password(self):
