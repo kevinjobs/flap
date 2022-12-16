@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 
-from .extensions import db
+from .extensions import db, migrate
 from .blueprints import auth, api
 
 from config import config as configs
@@ -19,6 +19,7 @@ def create_app(conf='default'):
 
     # set up extensions
     db.init_app(app)
+    migrate.init_app(app, db)
 
     # init database under app context
     # see: https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/quickstart/

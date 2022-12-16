@@ -11,7 +11,7 @@ manager = Manager(app)
 manager.add_command('run', Server(host='localhost'))
 
 
-# add a conmmand via decorator
+# add a command via decorator
 @manager.command
 def lift():
     print("hello, flask!")
