@@ -1,4 +1,5 @@
 .vscode/
+.fleet/
 .idea/
 *.sqlite
 # Byte-compiled / optimized / DLL files

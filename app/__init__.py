@@ -1,10 +1,10 @@
 import os
 
 from flask import Flask
-from .extensions import db
 
-from .blueprints.auth import auth
-from .blueprints.api import api
+from .extensions import db
+from .blueprints import auth, api
+
 from config import config as configs
 
 
