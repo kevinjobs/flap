@@ -44,7 +44,7 @@ class User(db.Model):
     name = db.Column(db.String(64))
     email = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
-    is_default = db.Column(db.Integer)
+    is_default = db.Column(db.Boolean, default=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
     @property

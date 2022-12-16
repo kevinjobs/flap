@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from sqlalchemy.exc import IntegrityError
 
 from app import db
@@ -6,7 +6,7 @@ from app.models import User
 from app.utils import resp, RespCode
 
 
-api = Blueprint('api', __name__, url_prefix='/api')
+api = Blueprint('api', __name__)
 
 
 @api.get('/version')
@@ -20,14 +20,19 @@ def get_version():
 @api.post('/register')
 def add_new():
     user = User(
-        name='KevinJobs',
-        email='me@kevinjobs.com',
-        password='june1995'
+        name=request.form.get('name'),
+        email=request.form.get('email'),
+        password=request.form.get('password')
     )
     db.session.add(user)
     try:
         db.session.commit()
+        return resp(RespCode.OK, 'add new user success')
     except IntegrityError:
         return resp(RespCode.ERROR, 'user existed')
 
-    return resp(RespCode.OK, 'add new user success')
+
+@api.get('/users')
+def get_user_list():
+    user = User.query.all()
+    return resp(RespCode.OK, 'get user list success', user)
