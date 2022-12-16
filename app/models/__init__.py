@@ -1,3 +1,4 @@
-from .user import Role, User
+from .role import Role
+from .user import User
 from .article import Article
 from .category import Category
