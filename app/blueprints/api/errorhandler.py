@@ -20,7 +20,7 @@ def no_such_table(error):
 
 
 @api.errorhandler(SQLAlchemyError)
-def sqlalchemy_error(error):
+def database_error(error):
     return resp(RespCode.ERROR, 'database error.')
 
 
