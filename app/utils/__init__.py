@@ -1,24 +1,9 @@
-import time
+from .moment import now_timestamp
+from .response import RespCode, resp
 
 
-class RespCode:
-    OK = 0
-    ERROR = 1
-
-
-def resp(code, msg, data=None):
-    result = {
-        'code': code,
-        'msg': msg,
-    }
-
-    if data is not None:
-        result['data'] = data
-
-    return result
-
-
-def now_timestamp():
-    """linux timestamp(15) of now
-    """
-    return int(time.time()*1000)
+__all__ = [
+    'RespCode',
+    'resp',
+    'now_timestamp',
+]

@@ -17,7 +17,10 @@ class User(db.Model):
     articles = db.relationship('Article', backref='users', lazy='dynamic')
 
     def to_dict(self):
-        data = {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
+        data = {
+            c.key:
+                getattr(self, c.key) for c in inspect(self).mapper.column_attrs
+        }
         del data['password_hash']
         del data['role_id']
         return data

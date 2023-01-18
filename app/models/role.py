@@ -36,4 +36,3 @@ class Role(db.Model):
 
     def __repr__(self):
         return '<Role \'%s\'>' % self.name
-    
