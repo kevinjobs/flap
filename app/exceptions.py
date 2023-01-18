@@ -6,6 +6,6 @@ class UserError(Exception):
         return repr(self.msg)
 
 
-class UserDoesntExistError(UserError):
+class UserDoesntExist(UserError):
     def __init__(self):
         super().__init__('user doesn\'t exist.')

@@ -2,35 +2,53 @@ import json
 import pytest
 from sqlalchemy.exc import NoResultFound
 from flask.testing import FlaskClient
-from app.utils import now_timestamp
-from app.exceptions import UserDoesntExistError
+
+from app.exceptions import UserDoesntExist
 
 
-def test_register(client: FlaskClient):
-    resp = client.post('/api/register', data={
-        'name': 'kevinjobs{}'.format(now_timestamp()),
-        'password': 'mytestpasswd',
-        'email': 'kevinjobs{}@qq.com'.format(now_timestamp()),
+fields = 'name,password,email'
+test_users = [
+    ('kevinjobs', 'takemeaway', 'kevinjobs@qq.com'),
+    ('kevinjobs1', 'takemeaway', 'kevinjobs1@qq.com'),
+    ('kevinjobs2', 'takemeaway', 'kevinjobs2@qq.com'),
+]
+
+
+def _no_error_code(resp):
+    return json.loads(resp.text)['code'] == 0 and resp.status_code == 200
+
+
+@pytest.mark.parametrize(fields, test_users)
+def test_add_new_user(client: FlaskClient, name, password, email):
+    resp = client.post('/api/user', data={
+        'name': name,
+        'password': password,
+        'email': email,
     })
-    assert resp.status_code == 200
-    assert isinstance(resp.text, str)
-    assert json.loads(resp.text)['code'] == 0
+    assert _no_error_code(resp)
 
 
 def test_get_users(client: FlaskClient):
     resp = client.get('/api/users')
-    assert resp.status_code == 200
-    assert isinstance(resp.text, str)
-    assert json.loads(resp.text)['code'] == 0
+    assert _no_error_code(resp)
+    assert len(json.loads(resp.text)['data']) == 3
 
 
-def test_get_user_by_name(client: FlaskClient):
-    with pytest.raises(UserDoesntExistError):
-        resp = client.get('/api/user/kevinjobs')
-        assert resp.status_code != 200
+@pytest.mark.parametrize(fields, test_users)
+def test_get_user_by_name(client: FlaskClient, name, password, email):
+    resp = client.get(f'/api/user/{name}')
+    assert _no_error_code(resp)
+
+    with pytest.raises(UserDoesntExist):
+        resp = client.get('/api/user/anameless')
+        assert not _no_error_code(resp)
 
 
-def test_delete_user_by_id(client: FlaskClient):
+@pytest.mark.parametrize(fields, test_users)
+def test_delete_user_by_email(client: FlaskClient, name, password, email):
+    resp = client.delete(f'/api/user/{email}')
+    assert _no_error_code(resp)
+
     with pytest.raises(NoResultFound):
-        resp = client.delete('/api/user/3')
-        assert resp.status_code != 200
+        resp = client.delete('/api/user/someonedoesntexist')
+        assert not _no_error_code(resp)

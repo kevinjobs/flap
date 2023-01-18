@@ -22,7 +22,7 @@ class User(db.Model):
                 getattr(self, c.key) for c in inspect(self).mapper.column_attrs
         }
         del data['password_hash']
-        del data['role_id']
+        # del data['role_id']
         return data
 
     @property

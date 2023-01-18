@@ -1,5 +1,5 @@
-from .auth import auth
-from .api import api
+from app.blueprints.auth import auth
+from app.blueprints.api import api
 
 
 __all__ = [
