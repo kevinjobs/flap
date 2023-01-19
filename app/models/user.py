@@ -1,14 +1,16 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import inspect
 
-from app.extensions import db
-from app.utils import now_timestamp
+from app.extensions.db import db
+from app.utils.moment import now_timestamp
+from app.utils.short_uuid import short_uuid
 
 
 class User(db.Model):
     __tablename__ = 'users'
     create_at = db.Column(db.BigInteger, default=now_timestamp())
     id = db.Column(db.Integer, primary_key=True)
+    uid = db.Column(db.String(8), default=short_uuid)
     name = db.Column(db.String(64))
     email = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))

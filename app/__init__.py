@@ -2,8 +2,10 @@ import os
 
 from flask import Flask
 
-from app.extensions import db, migrate
+from app.extensions.db import db
+from app.extensions.migrate import migrate
 from app.blueprints import auth, api
+from app.models import *
 
 from config import config as configs
 

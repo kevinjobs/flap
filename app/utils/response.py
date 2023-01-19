@@ -1,7 +1,7 @@
 from enum import IntEnum, unique
 
 
-@unique()
+@unique
 class RespCode(IntEnum):
     OK = 0
     ERROR = 1

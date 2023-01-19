@@ -45,6 +45,8 @@ def get_user_by_name(username):
 @api.delete('/user/<email>')
 def delete_user_by_email(email):
     result = User.query.filter(User.email == email).one()
+    if not result:
+        raise UserDoesntExist
     db.session.delete(result)
     db.session.commit()
     return resp(RespCode.OK, 'delete user sucecss')

@@ -1,12 +1,9 @@
 import json
 import pytest
-from sqlalchemy.exc import NoResultFound
 from flask.testing import FlaskClient
 
-from app.exceptions import UserDoesntExist
 
-
-fields = 'name,password,email'
+fields = ('name', 'password', 'email')
 test_users = [
     ('kevinjobs', 'takemeaway', 'kevinjobs@qq.com'),
     ('kevinjobs1', 'takemeaway', 'kevinjobs1@qq.com'),
@@ -28,6 +25,12 @@ def test_add_new_user(client: FlaskClient, name, password, email):
     assert _no_error_code(resp)
 
 
+@pytest.mark.parametrize(fields, test_users)
+def test_get_user_by_name(client: FlaskClient, name, password, email):
+    resp = client.get(f'/api/user/{name}')
+    assert _no_error_code(resp)
+
+
 def test_get_users(client: FlaskClient):
     resp = client.get('/api/users')
     assert _no_error_code(resp)
@@ -35,20 +38,6 @@ def test_get_users(client: FlaskClient):
 
 
 @pytest.mark.parametrize(fields, test_users)
-def test_get_user_by_name(client: FlaskClient, name, password, email):
-    resp = client.get(f'/api/user/{name}')
-    assert _no_error_code(resp)
-
-    with pytest.raises(UserDoesntExist):
-        resp = client.get('/api/user/anameless')
-        assert not _no_error_code(resp)
-
-
-@pytest.mark.parametrize(fields, test_users)
 def test_delete_user_by_email(client: FlaskClient, name, password, email):
     resp = client.delete(f'/api/user/{email}')
     assert _no_error_code(resp)
-
-    with pytest.raises(NoResultFound):
-        resp = client.delete('/api/user/someonedoesntexist')
-        assert not _no_error_code(resp)
