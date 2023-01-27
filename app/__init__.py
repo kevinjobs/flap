@@ -2,8 +2,10 @@ import os
 
 from flask import Flask
 
-from app.extensions import db, migrate
+from app.extensions.db import db
+from app.extensions.migrate import migrate
 from app.blueprints import auth, api
+from app.models.role import Role
 
 from config import config as configs
 
@@ -25,6 +27,8 @@ def create_app(conf='default'):
     # see: https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/quickstart/
     with app.app_context():
         db.create_all()
+        # insert roles
+        Role.insert_roles()
 
     # register blueprints
     app.register_blueprint(auth)

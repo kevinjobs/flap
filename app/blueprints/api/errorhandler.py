@@ -1,12 +1,10 @@
 from app.blueprints.api import api
 from app.utils import resp, RespCode
-from sqlalchemy.exc import \
-    IntegrityError, NoSuchTableError, SQLAlchemyError, NoResultFound
 
 
 @api.errorhandler(500)
 def internal_server_error(error):
-    return resp(RespCode.INTERNAL_SERVER_ERROR, 'internal server error.')
+    return resp(RespCode.ERROR, 'internal server error.')
 
 
 @api.errorhandler(IntegrityError)
@@ -26,4 +24,4 @@ def database_error(error):
 
 @api.errorhandler(NoResultFound)
 def no_result_found(error):
-    return resp(RespCode.NOT_FOUND, 'no result found.')
+    return resp(RespCode.ERROR, 'no result found.')
