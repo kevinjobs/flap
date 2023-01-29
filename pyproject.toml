@@ -2,6 +2,7 @@
 start = "flask run -p 9527"
 migrate = "flask db migrate"
 upgrade = "flask db upgrade"
+test = "pytest"
 
 [project]
 name = ""
@@ -16,7 +17,7 @@ dependencies = [
     "click==8.1.3",
     "colorama==0.4.6",
     "exceptiongroup==1.1.0",
-    "flake8==5.0.4",
+    "flake8>=5.0.4",
     "Flask==2.2.2",
     "Flask-Migrate==4.0.0",
     "Flask-SQLAlchemy==3.0.2",
