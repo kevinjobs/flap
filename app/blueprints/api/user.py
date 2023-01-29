@@ -5,7 +5,6 @@ from app.exceptions import UserDoesntExist
 from app.models import User
 from app.utils import resp, RespCode
 from app.blueprints.api.create_blueprint import api
-from app.extension.validator.validator import Email, validate
 
 
 @api.get('/users')
@@ -24,12 +23,6 @@ def add_new_user():
         request.form.get('name'), \
         request.form.get('email'), \
         request.form.get('password')
-
-    rules = {'email': [Email(email)]}
-    result = validate(rules, {'email': email})
-
-    if not result[0]:
-        return resp(RespCode.ERROR, result[1])
 
     user = User(name=name, email=email, password=password)
     db.session.add(user)
