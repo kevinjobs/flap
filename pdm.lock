@@ -78,14 +78,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "flask-script"
-version = "2.0.6"
-summary = "Scripting support for Flask"
-dependencies = [
-    "Flask",
-]
-
-[[package]]
 name = "flask-sqlalchemy"
 version = "3.0.2"
 requires_python = ">=3.7"
@@ -245,7 +237,7 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:194c2b48ef7bf58867b88f24f14846100cdd3a11b64350428593416965fa8e92"
+content_hash = "sha256:f5576c8de1d31033d611e9ae377f3d793389636eca51603eeab8f6db51ec3dd4"
 
 [metadata.files]
 "alembic 1.9.0" = [
@@ -279,9 +271,6 @@ content_hash = "sha256:194c2b48ef7bf58867b88f24f14846100cdd3a11b6435042859341696
 "flask-migrate 4.0.0" = [
     {url = "https://files.pythonhosted.org/packages/c1/2f/897dfed23b4e5ef5717dc1c16ecbb286cc1c044d281736a1a002b1537181/Flask-Migrate-4.0.0.tar.gz", hash = "sha256:2a301c3040af6844f29d9149abe428a0f08ebc8fa149e72113bbb36fa341920a"},
     {url = "https://files.pythonhosted.org/packages/c6/7a/038761339115de508dcc6a95235879c47879c092689d89bfc356649d5439/Flask_Migrate-4.0.0-py3-none-any.whl", hash = "sha256:e75a46b657e3062296b9f6e92f31e19662f76cfee8abd6ae94640cbcb79fe016"},
-]
-"flask-script 2.0.6" = [
-    {url = "https://files.pythonhosted.org/packages/00/a4/cd587b2b19f043b65bf33ceda2f6e4e6cdbd0ce18d01a52b9559781b1da6/Flask-Script-2.0.6.tar.gz", hash = "sha256:6425963d91054cfcc185807141c7314a9c5ad46325911bd24dcb489bd0161c65"},
 ]
 "flask-sqlalchemy 3.0.2" = [
     {url = "https://files.pythonhosted.org/packages/0b/b7/05a8f9c3f010775275f8dec53e40ff7ea1ae61bf1cfa4b524caf4d3da982/Flask-SQLAlchemy-3.0.2.tar.gz", hash = "sha256:16199f5b3ddfb69e0df2f52ae4c76aedbfec823462349dabb21a1b2e0a2b65e9"},
