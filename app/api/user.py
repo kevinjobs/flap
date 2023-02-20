@@ -1,10 +1,10 @@
 from flask import request
 
-from app import db
+from app.extensions.db import db
 from app.exceptions import UserDoesntExist
 from app.models import User
 from app.utils import resp, RespCode
-from app.blueprints.api.create_blueprint import api
+from ._api import api
 
 
 @api.get('/users')

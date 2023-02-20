@@ -1,4 +1,4 @@
-from app.blueprints.api import api
+from app.api import api
 from app.utils import resp, RespCode
 
 

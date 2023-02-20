@@ -4,19 +4,20 @@ from flask import Flask
 
 from app.extensions.db import db
 from app.extensions.migrate import migrate
-from app.blueprints import auth, api
+from app.api import api
+from app.gallery import gallery
 from app.models.role import Role
 
 from config import config as configs
 
 
-def create_app(conf='default'):
+def create_app(conf='development'):
     app = Flask(__name__)
 
     config_name = conf
     # init the config
     if not isinstance(conf, str):
-        config_name = os.getenv('FLASK_CONFIG', 'default')
+        config_name = os.getenv('FLASK_CONFIG', 'development')
     app.config.from_object(configs[config_name])
 
     # set up extensions
@@ -31,7 +32,7 @@ def create_app(conf='default'):
         Role.insert_roles()
 
     # register blueprints
-    app.register_blueprint(auth)
-    app.register_blueprint(api, url_prefix='/api')
+    app.register_blueprint(gallery)
+    app.register_blueprint(api, url_prefix='/api/v1')
 
     return app

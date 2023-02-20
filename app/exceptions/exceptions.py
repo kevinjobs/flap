@@ -8,4 +8,4 @@ class UserError(Exception):
 
 class UserDoesntExist(UserError):
     def __init__(self):
-        super().__init__('user doesn\'t exist.')
+        super().__init__('user does not exist.')
